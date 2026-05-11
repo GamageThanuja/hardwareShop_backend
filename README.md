@@ -2,7 +2,6 @@
 
 Production-grade .NET 10 Web API. Clean Architecture, JWT + refresh-token auth, EF Core/Postgres, Redis, Hangfire, SignalR, Serilog, OpenTelemetry via Aspire.
 
-Scaffolded from the [Techwire .NET API template](https://github.com/Techwire/Techwire.Boilerplate.NetApi).
 
 ## First-run
 
