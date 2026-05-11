@@ -19,6 +19,13 @@ public static class HangfireJobConfiguration
             "0 */6 * * *",
             new RecurringJobOptions { TimeZone = TimeZoneInfo.Utc });
 
+        manager.AddOrUpdate<LowStockAlertJob>(
+            "low-stock-alert",
+            "notifications",
+            job => job.RunAsync(CancellationToken.None),
+            "0 8 * * *",
+            new RecurringJobOptions { TimeZone = TimeZoneInfo.Utc });
+
         logger.LogInformation("Hangfire recurring jobs configured");
     }
 }

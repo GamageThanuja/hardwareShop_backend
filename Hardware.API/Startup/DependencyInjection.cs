@@ -15,6 +15,7 @@ using Hardware.Application.Services.Inventory;
 using Hardware.Application.Services.Purchasing;
 using Hardware.Application.Services.Sales;
 using Hardware.Infrastructure.Identity;
+using Hardware.Infrastructure.Notifications;
 using Hardware.Infrastructure.Services.Dashboard;
 using Hardware.Infrastructure.Services.Reports;
 using Hardware.Infrastructure.Services.Inventory;
@@ -319,9 +320,11 @@ public static class DependencyInjection
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<ISalesOrderService, SalesOrderService>();
         services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<ISalesReturnService, SalesReturnService>();
 
         // Purchasing
         services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();
+        services.AddScoped<IPurchaseReturnService, PurchaseReturnService>();
     }
 
     private static void RegisterInfrastructureServices(this IServiceCollection services)
@@ -335,6 +338,8 @@ public static class DependencyInjection
         services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<ISessionRevocationStore, RedisSessionRevocationStore>();
         services.AddScoped<RefreshTokenCleanupJob>();
+        services.AddScoped<LowStockAlertJob>();
+        services.AddScoped<INotificationService, NotificationService>();
     }
 
     private static void RegisterCors(this IServiceCollection services, IConfiguration cfg)

@@ -34,6 +34,12 @@ public sealed class AutoMapperProfile : Profile
         CreateMap<Customer, CustomerDto>();
         CreateMap<Payment, PaymentDto>()
             .ForMember(d => d.OrderNumber, o => o.MapFrom(s => s.SalesOrder.OrderNumber));
+        CreateMap<SalesReturnItem, SalesReturnItemDto>()
+            .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
+            .ForMember(d => d.ProductSKU, o => o.MapFrom(s => s.Product.SKU));
+        CreateMap<SalesReturn, SalesReturnDto>()
+            .ForMember(d => d.OrderNumber, o => o.MapFrom(s => s.SalesOrder.OrderNumber))
+            .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
         CreateMap<SalesOrderItem, SalesOrderItemDto>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.ProductSKU, o => o.MapFrom(s => s.Product.SKU));
@@ -43,6 +49,13 @@ public sealed class AutoMapperProfile : Profile
             .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
 
         // Purchasing
+        CreateMap<PurchaseReturnItem, PurchaseReturnItemDto>()
+            .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
+            .ForMember(d => d.ProductSKU, o => o.MapFrom(s => s.Product.SKU));
+        CreateMap<PurchaseReturn, PurchaseReturnDto>()
+            .ForMember(d => d.PONumber, o => o.MapFrom(s => s.PurchaseOrder.PONumber))
+            .ForMember(d => d.SupplierName, o => o.MapFrom(s => s.PurchaseOrder.Supplier.Name))
+            .ForMember(d => d.Items, o => o.MapFrom(s => s.Items));
         CreateMap<PurchaseOrderItem, PurchaseOrderItemDto>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.ProductSKU, o => o.MapFrom(s => s.Product.SKU));

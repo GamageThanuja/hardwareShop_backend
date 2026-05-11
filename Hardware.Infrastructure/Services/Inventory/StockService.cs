@@ -7,11 +7,12 @@ using Hardware.Application.Services.Inventory;
 using Hardware.Domain.Entities.Inventory;
 using Hardware.Domain.Enums;
 using Hardware.Domain.Interfaces.Repositories;
+using Hardware.Infrastructure.Notifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hardware.Infrastructure.Services.Inventory;
 
-public sealed class StockService(IUnitOfWork uow, IMapper mapper) : IStockService
+public sealed class StockService(IUnitOfWork uow, IMapper mapper, INotificationService notifications) : IStockService
 {
     public async Task<IReadOnlyList<StockItemDto>> GetStockByProductAsync(Guid productId, CancellationToken ct = default)
     {
@@ -99,6 +100,10 @@ public sealed class StockService(IUnitOfWork uow, IMapper mapper) : IStockServic
             .Include(t => t.Product)
             .Include(t => t.Warehouse)
             .FirstOrDefaultAsync(t => t.Id == transaction.Id, ct);
+
+        if (isOutbound && stockItem.QuantityOnHand <= result!.Product.ReorderLevel)
+            _ = notifications.NotifyLowStockAsync(result.ProductId, result.Product.Name, result.Product.SKU,
+                stockItem.QuantityOnHand, result.Product.ReorderLevel, result.Warehouse.Name);
 
         return mapper.Map<InventoryTransactionDto>(result!);
     }

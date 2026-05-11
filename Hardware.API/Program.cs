@@ -1,8 +1,8 @@
 using Hangfire;
-using Hardware.API.Hubs;
 using Hardware.API.Middlewares;
 using Hardware.API.Startup;
 using Hardware.Infrastructure.BackgroundJobs;
+using Hardware.Infrastructure.Notifications;
 using Serilog;
 using Serilog.Events;
 

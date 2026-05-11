@@ -8,11 +8,12 @@ using Hardware.Domain.Entities.Inventory;
 using Hardware.Domain.Entities.Sales;
 using Hardware.Domain.Enums;
 using Hardware.Domain.Interfaces.Repositories;
+using Hardware.Infrastructure.Notifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hardware.Infrastructure.Services.Sales;
 
-public sealed class SalesOrderService(IUnitOfWork uow, IMapper mapper) : ISalesOrderService
+public sealed class SalesOrderService(IUnitOfWork uow, IMapper mapper, INotificationService notifications) : ISalesOrderService
 {
     public async Task<SalesOrderDto> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
@@ -92,6 +93,9 @@ public sealed class SalesOrderService(IUnitOfWork uow, IMapper mapper) : ISalesO
 
         await uow.Repository<SalesOrder>().AddAsync(order, ct);
         await uow.SaveChangesAsync(ct);
+
+        _ = notifications.NotifyNewSalesOrderAsync(order.Id, order.OrderNumber, order.GrandTotal);
+
         return await GetByIdAsync(order.Id, ct);
     }
 

@@ -7,5 +7,6 @@ public enum InventoryTransactionType
     Adjustment = 3,
     TransferIn = 4,
     TransferOut = 5,
-    ReturnIn = 6
+    ReturnIn = 6,
+    ReturnOut = 7
 }

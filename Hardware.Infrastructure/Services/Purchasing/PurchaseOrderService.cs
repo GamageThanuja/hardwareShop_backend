@@ -8,11 +8,12 @@ using Hardware.Domain.Entities.Inventory;
 using Hardware.Domain.Entities.Purchasing;
 using Hardware.Domain.Enums;
 using Hardware.Domain.Interfaces.Repositories;
+using Hardware.Infrastructure.Notifications;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hardware.Infrastructure.Services.Purchasing;
 
-public sealed class PurchaseOrderService(IUnitOfWork uow, IMapper mapper) : IPurchaseOrderService
+public sealed class PurchaseOrderService(IUnitOfWork uow, IMapper mapper, INotificationService notifications) : IPurchaseOrderService
 {
     public async Task<PurchaseOrderDto> GetByIdAsync(Guid id, CancellationToken ct = default)
     {
@@ -129,6 +130,16 @@ public sealed class PurchaseOrderService(IUnitOfWork uow, IMapper mapper) : IPur
             : order.Status;
 
         await uow.SaveChangesAsync(ct);
+
+        if (allReceived)
+        {
+            var supplierName = await uow.Repository<Supplier>().Query(tracking: false)
+                .Where(s => s.Id == order.SupplierId)
+                .Select(s => s.Name)
+                .FirstOrDefaultAsync(ct) ?? string.Empty;
+            _ = notifications.NotifyPurchaseOrderReceivedAsync(order.Id, order.PONumber, supplierName);
+        }
+
         return await GetByIdAsync(id, ct);
     }
 
