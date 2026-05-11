@@ -315,6 +315,7 @@ public static class DependencyInjection
         // Sales
         services.AddScoped<ICustomerService, CustomerService>();
         services.AddScoped<ISalesOrderService, SalesOrderService>();
+        services.AddScoped<IPaymentService, PaymentService>();
 
         // Purchasing
         services.AddScoped<IPurchaseOrderService, PurchaseOrderService>();

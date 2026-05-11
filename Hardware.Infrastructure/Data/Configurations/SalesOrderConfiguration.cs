@@ -16,8 +16,11 @@ public sealed class SalesOrderConfiguration : IEntityTypeConfiguration<SalesOrde
         b.Property(o => o.TaxAmount).HasPrecision(18, 4);
         b.Property(o => o.DiscountAmount).HasPrecision(18, 4);
         b.Property(o => o.GrandTotal).HasPrecision(18, 4);
+        b.Property(o => o.AmountPaid).HasPrecision(18, 4);
         b.Property(o => o.Notes).HasMaxLength(1000);
         b.Property(o => o.Status).IsRequired();
+        b.Property(o => o.PaymentStatus).IsRequired();
+        b.Ignore(o => o.Balance);
 
         b.HasIndex(o => o.OrderNumber).IsUnique().HasDatabaseName("IX_SalesOrders_OrderNumber");
         b.HasIndex(o => o.CustomerId).HasDatabaseName("IX_SalesOrders_CustomerId");

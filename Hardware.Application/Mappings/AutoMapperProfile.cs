@@ -5,6 +5,7 @@ using Hardware.Application.DTOs.Sales;
 using Hardware.Domain.Entities.Inventory;
 using Hardware.Domain.Entities.Purchasing;
 using Hardware.Domain.Entities.Sales;
+using Hardware.Domain.Enums;
 
 namespace Hardware.Application.Mappings;
 
@@ -31,6 +32,8 @@ public sealed class AutoMapperProfile : Profile
 
         // Sales
         CreateMap<Customer, CustomerDto>();
+        CreateMap<Payment, PaymentDto>()
+            .ForMember(d => d.OrderNumber, o => o.MapFrom(s => s.SalesOrder.OrderNumber));
         CreateMap<SalesOrderItem, SalesOrderItemDto>()
             .ForMember(d => d.ProductName, o => o.MapFrom(s => s.Product.Name))
             .ForMember(d => d.ProductSKU, o => o.MapFrom(s => s.Product.SKU));

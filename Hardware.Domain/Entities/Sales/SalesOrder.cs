@@ -16,6 +16,11 @@ public class SalesOrder : AuditableEntity
     public string? Notes { get; set; }
     public Guid? ProcessedByUserId { get; set; }
 
+    public PaymentStatus PaymentStatus { get; set; } = PaymentStatus.Unpaid;
+    public decimal AmountPaid { get; set; }
+    public decimal Balance => GrandTotal - AmountPaid;
+
     public Customer? Customer { get; set; }
     public ICollection<SalesOrderItem> Items { get; set; } = [];
+    public ICollection<Payment> Payments { get; set; } = [];
 }

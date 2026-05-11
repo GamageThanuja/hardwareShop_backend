@@ -14,6 +14,9 @@ public sealed record SalesOrderDto
     public decimal TaxAmount { get; init; }
     public decimal DiscountAmount { get; init; }
     public decimal GrandTotal { get; init; }
+    public PaymentStatus PaymentStatus { get; init; }
+    public decimal AmountPaid { get; init; }
+    public decimal Balance => GrandTotal - AmountPaid;
     public string? Notes { get; init; }
     public IReadOnlyList<SalesOrderItemDto> Items { get; init; } = [];
     public DateTime CreatedAt { get; init; }
