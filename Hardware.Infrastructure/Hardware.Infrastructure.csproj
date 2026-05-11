@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hardware.Domain\Hardware.Domain.csproj"/>
+    <ProjectReference Include="..\Hardware.Application\Hardware.Application.csproj"/>
+    <ProjectReference Include="..\Hardware.Shared\Hardware.Shared.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- EF Core / Postgres -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design"/>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL"/>
+
+    <!-- Identity / JWT -->
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore"/>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt"/>
+    <PackageReference Include="BCrypt.Net-Next"/>
+
+    <!-- Caching -->
+    <PackageReference Include="StackExchange.Redis"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory"/>
+
+    <!-- Hangfire -->
+    <PackageReference Include="Hangfire"/>
+    <PackageReference Include="Hangfire.AspNetCore"/>
+    <PackageReference Include="Hangfire.Redis.StackExchange"/>
+
+    <!-- Hosting / DI / Logging abstractions -->
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
+    <PackageReference Include="Microsoft.Extensions.Options"/>
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions"/>
+  </ItemGroup>
+
+</Project>

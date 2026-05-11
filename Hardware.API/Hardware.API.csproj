@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Hardware.Application\Hardware.Application.csproj"/>
+    <ProjectReference Include="..\Hardware.Infrastructure\Hardware.Infrastructure.csproj"/>
+    <ProjectReference Include="..\Hardware.Shared\Hardware.Shared.csproj"/>
+    <ProjectReference Include="..\Hardware.ServiceDefaults\Hardware.ServiceDefaults.csproj"/>
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- EF Core tooling (so dotnet ef migrations works against API as startup project) -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design"/>
+
+    <!-- Identity / JWT -->
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer"/>
+
+    <!-- Validation auto-wiring -->
+    <PackageReference Include="FluentValidation.AspNetCore"/>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions"/>
+
+    <!-- AutoMapper DI -->
+    <PackageReference Include="AutoMapper"/>
+
+    <!-- Caching -->
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis"/>
+    <PackageReference Include="Microsoft.AspNetCore.OutputCaching.StackExchangeRedis"/>
+
+    <!-- Hangfire -->
+    <PackageReference Include="Hangfire.AspNetCore"/>
+    <PackageReference Include="Hangfire.Redis.StackExchange"/>
+
+    <!-- SignalR backplane -->
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.StackExchangeRedis"/>
+    <PackageReference Include="Microsoft.AspNetCore.SignalR.Protocols.MessagePack"/>
+
+    <!-- Logging -->
+    <PackageReference Include="Serilog"/>
+    <PackageReference Include="Serilog.AspNetCore"/>
+    <PackageReference Include="Serilog.Sinks.Console"/>
+    <PackageReference Include="Serilog.Sinks.File"/>
+    <PackageReference Include="Serilog.Sinks.PostgreSQL"/>
+    <PackageReference Include="Serilog.Enrichers.Environment"/>
+    <PackageReference Include="Serilog.Enrichers.Process"/>
+    <PackageReference Include="Serilog.Enrichers.Thread"/>
+
+    <!-- Health checks -->
+    <PackageReference Include="AspNetCore.HealthChecks.NpgSql"/>
+    <PackageReference Include="AspNetCore.HealthChecks.Redis"/>
+
+    <!-- Swagger -->
+    <PackageReference Include="Swashbuckle.AspNetCore"/>
+  </ItemGroup>
+
+</Project>

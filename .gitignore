@@ -1,0 +1,57 @@
+# .NET
+bin/
+obj/
+out/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+.vs/
+.vscode/
+.idea/
+*.pidb
+*.swp
+*.swo
+
+# Build
+artifacts/
+publish/
+*.dll.config
+*.exe
+*.dll
+*.pdb
+*.cache
+
+# NuGet
+*.nupkg
+*.snupkg
+.nuget/
+
+# Logs
+Logs/
+logs/
+*.log
+
+# Secrets / env
+appsettings.*.local.json
+*.user.json
+.env
+.env.*
+secrets.json
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Tooling
+coverage*/
+TestResults/
+*.coverage
+*.coveragexml
+*.lock.json
+.aspire-temp/
+*.tsbuildinfo
+node_modules/
+
+**/appsettings.Development.json

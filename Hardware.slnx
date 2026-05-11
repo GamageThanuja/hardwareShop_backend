@@ -1,0 +1,13 @@
+<Solution>
+    <Folder Name="/Solution Items/">
+        <File Path="Directory.Build.props"/>
+        <File Path="Directory.Packages.props"/>
+    </Folder>
+    <Project Path="Hardware.API/Hardware.API.csproj"/>
+    <Project Path="Hardware.AppHost/Hardware.AppHost.csproj"/>
+    <Project Path="Hardware.Application/Hardware.Application.csproj"/>
+    <Project Path="Hardware.Domain/Hardware.Domain.csproj"/>
+    <Project Path="Hardware.Infrastructure/Hardware.Infrastructure.csproj"/>
+    <Project Path="Hardware.ServiceDefaults/Hardware.ServiceDefaults.csproj"/>
+    <Project Path="Hardware.Shared/Hardware.Shared.csproj"/>
+</Solution>

@@ -1,0 +1,60 @@
+name: hw
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: kumudu-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: kumudu
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d kumudu"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: kumudu-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: ["redis-server", "--appendonly", "yes"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: .
+      dockerfile: Hardware.API/Dockerfile
+    container_name: kumudu-api
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=kumudu;Username=postgres;Password=postgres"
+      ConnectionStrings__Redis: "redis:6379"
+      Jwt__SecurityKey: "DEV_ONLY_REPLACE_IN_PROD_AT_LEAST_32_CHARS_LONG_KEY"
+    ports:
+      - "8080:8080"
+    profiles:
+      - api
+
+volumes:
+  postgres_data:
+  redis_data:
