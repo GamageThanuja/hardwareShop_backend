@@ -12,4 +12,6 @@ public interface IUserService
     Task<UserDto> UpdateAsync(Guid id, UpdateUserDto dto, CancellationToken ct = default);
     Task DeleteAsync(Guid id, CancellationToken ct = default);
     Task<UserDto> AssignRolesAsync(Guid id, AssignRolesDto dto, CancellationToken ct = default);
+    Task<UserDto> UpdateProfileAsync(Guid id, UpdateMyProfileDto dto, CancellationToken ct = default);
+    Task ChangePasswordAsync(Guid id, ChangePasswordDto dto, CancellationToken ct = default);
 }

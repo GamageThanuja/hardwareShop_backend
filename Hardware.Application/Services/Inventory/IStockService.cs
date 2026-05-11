@@ -10,4 +10,5 @@ public interface IStockService
     Task<PagedResult<StockItemDto>> GetStockByWarehouseAsync(Guid warehouseId, PagedRequestDto request, CancellationToken ct = default);
     Task<InventoryTransactionDto> RecordTransactionAsync(CreateInventoryTransactionDto dto, CancellationToken ct = default);
     Task<PagedResult<InventoryTransactionDto>> GetTransactionsAsync(PagedRequestDto request, Guid? productId, Guid? warehouseId, CancellationToken ct = default);
+    Task<StockTransferResultDto> TransferStockAsync(TransferStockDto dto, CancellationToken ct = default);
 }

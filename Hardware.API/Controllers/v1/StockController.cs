@@ -54,4 +54,15 @@ public sealed class StockController(
         var result = await stockService.RecordTransactionAsync(dto, ct);
         return CreatedAtAction(nameof(GetTransactions), ApiResponse<InventoryTransactionDto>.Success(result, "Transaction recorded."));
     }
+
+    [HttpPost("transfer")]
+    [Authorize(Policy = "RequireStoreKeeper")]
+    [ProducesResponseType(typeof(ApiResponse<StockTransferResultDto>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Transfer([FromBody] TransferStockDto dto, CancellationToken ct)
+    {
+        var result = await stockService.TransferStockAsync(dto, ct);
+        return Ok(ApiResponse<StockTransferResultDto>.Success(result, "Stock transferred."));
+    }
 }

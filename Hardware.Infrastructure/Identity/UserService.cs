@@ -169,6 +169,33 @@ public sealed class UserService(
         return ToDto(user, dto.Roles);
     }
 
+    public async Task<UserDto> UpdateProfileAsync(Guid id, UpdateMyProfileDto dto, CancellationToken ct = default)
+    {
+        var user = await FindActiveUserAsync(id);
+
+        user.FirstName   = dto.FirstName;
+        user.LastName    = dto.LastName;
+        user.PhoneNumber = dto.PhoneNumber;
+        user.PhoneNumberConfirmed = !string.IsNullOrWhiteSpace(dto.PhoneNumber);
+        user.UpdatedAt   = DateTime.UtcNow;
+
+        var result = await userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+            throw new BusinessException(string.Join("; ", result.Errors.Select(e => e.Description)));
+
+        var roles = await userManager.GetRolesAsync(user);
+        return ToDto(user, roles);
+    }
+
+    public async Task ChangePasswordAsync(Guid id, ChangePasswordDto dto, CancellationToken ct = default)
+    {
+        var user = await FindActiveUserAsync(id);
+
+        var result = await userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.NewPassword);
+        if (!result.Succeeded)
+            throw new BusinessException(string.Join("; ", result.Errors.Select(e => e.Description)));
+    }
+
     private async Task<ApplicationUser> FindActiveUserAsync(Guid id)
     {
         var user = await userManager.FindByIdAsync(id.ToString())

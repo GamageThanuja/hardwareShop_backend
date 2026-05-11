@@ -10,11 +10,13 @@ using Hardware.Application.Mappings;
 using Hardware.Application.Services.Authentication;
 using Hardware.Application.Services.Dashboard;
 using Hardware.Application.Services.Identity;
+using Hardware.Application.Services.Reports;
 using Hardware.Application.Services.Inventory;
 using Hardware.Application.Services.Purchasing;
 using Hardware.Application.Services.Sales;
 using Hardware.Infrastructure.Identity;
 using Hardware.Infrastructure.Services.Dashboard;
+using Hardware.Infrastructure.Services.Reports;
 using Hardware.Infrastructure.Services.Inventory;
 using Hardware.Infrastructure.Services.Purchasing;
 using Hardware.Infrastructure.Services.Sales;
@@ -304,6 +306,7 @@ public static class DependencyInjection
 
         // Dashboard
         services.AddScoped<IDashboardService, DashboardService>();
+        services.AddScoped<IReportService, ReportService>();
 
         // Inventory
         services.AddScoped<ICategoryService, CategoryService>();
